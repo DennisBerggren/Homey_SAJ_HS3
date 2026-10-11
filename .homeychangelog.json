@@ -1,0 +1,6 @@
+{
+  "0.1.0": {
+    "en": "First test release: local Modbus TCP monitoring and control of the SAJ HS3.",
+    "sv": "Första testversionen: lokal övervakning och styrning av SAJ HS3 via Modbus TCP."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "errors": {
+    "host_required": "Ange IP-adress.",
+    "write_disabled": "Skrivning är avstängd. Ställ Åtkomst på \"Läs och skriv\" i enhetens inställningar.",
+    "unknown_mode": "Okänt läge: __mode__",
+    "soc_range": "SOC-gränser måste vara mellan 0 och 100 %.",
+    "soc_gap": "Max-SOC måste vara minst 6 procentenheter högre än min-SOC.",
+    "soc_offgrid": "Min-SOC måste vara högre än ödriftsgränsen (__limit__ %) + 5.",
+    "verify_failed": "Växelriktaren behöll inte inställningen (__details__). Om Tibber Smartstyrning eller något annat system styr batteriet kan det skriva över appen.",
+    "no_contact": "Ingen kontakt med SAJ HS3: __error__",
+    "slot_taken": "Växelriktaren stängde Modbus-anslutningen. AIO3-modulen tar bara emot ett begränsat antal Modbus-klienter – om Home Assistant eller något annat system redan är anslutet, koppla bort det och försök igen."
+  },
+  "status": {
+    "0": "Initierar",
+    "1": "Väntar",
+    "2": "I drift",
+    "3": "Ödrift (off-grid)",
+    "4": "Nätdrift (on-grid)",
+    "5": "Fel",
+    "6": "Uppdaterar",
+    "7": "Test",
+    "8": "Självtest",
+    "9": "Återställer"
+  },
+  "battery_state": {
+    "charging": "laddar",
+    "discharging": "laddar ur",
+    "idle": "vilar"
+  },
+  "pair": {
+    "subtitle": "Anslut via Modbus TCP (AIO3-modulen eller en Modbus-omvandlare).",
+    "host": "IP-adress",
+    "port": "Port",
+    "unit_id": "Modbus unit id",
+    "button": "Testa och lägg till",
+    "connecting": "Ansluter…",
+    "connected": "Ansluten! Batteri __soc__ %",
+    "failed": "Kunde inte ansluta: __error__",
+    "host_missing": "Ange IP-adress."
+  }
+}

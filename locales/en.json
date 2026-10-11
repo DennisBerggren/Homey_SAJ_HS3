@@ -1,0 +1,41 @@
+{
+  "errors": {
+    "host_required": "Enter the IP address.",
+    "write_disabled": "Writing is disabled. Set Access to \"Read and write\" in the device settings.",
+    "unknown_mode": "Unknown mode: __mode__",
+    "soc_range": "SOC limits must be between 0 and 100 %.",
+    "soc_gap": "Max SOC must be at least 6 percentage points higher than min SOC.",
+    "soc_offgrid": "Min SOC must be higher than the off-grid limit (__limit__ %) + 5.",
+    "verify_failed": "The inverter did not keep the setting (__details__). If Tibber Smart control or another system controls the battery, it may override this app.",
+    "no_contact": "No contact with the SAJ HS3: __error__",
+    "slot_taken": "The inverter closed the Modbus connection. The AIO3 module only accepts a limited number of Modbus clients – if Home Assistant or another system is already connected, disconnect it and try again."
+  },
+  "status": {
+    "0": "Initializing",
+    "1": "Waiting",
+    "2": "Running",
+    "3": "Off-grid",
+    "4": "On-grid",
+    "5": "Fault",
+    "6": "Updating",
+    "7": "Test",
+    "8": "Self-check",
+    "9": "Resetting"
+  },
+  "battery_state": {
+    "charging": "charging",
+    "discharging": "discharging",
+    "idle": "idle"
+  },
+  "pair": {
+    "subtitle": "Connect via Modbus TCP (the AIO3 module or a Modbus converter).",
+    "host": "IP address",
+    "port": "Port",
+    "unit_id": "Modbus unit id",
+    "button": "Test and add",
+    "connecting": "Connecting…",
+    "connected": "Connected! Battery __soc__ %",
+    "failed": "Could not connect: __error__",
+    "host_missing": "Enter the IP address."
+  }
+}

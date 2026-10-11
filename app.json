@@ -1,0 +1,821 @@
+{
+  "id": "com.saj.hs3",
+  "version": "0.1.0",
+  "compatibility": ">=12.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "SAJ HS3 Control",
+    "sv": "SAJ HS3 Control"
+  },
+  "description": {
+    "en": "Monitor and control a SAJ HS3 home battery locally over Modbus TCP",
+    "sv": "Övervaka och styr ett SAJ HS3-hembatteri lokalt via Modbus TCP"
+  },
+  "category": [
+    "energy"
+  ],
+  "brandColor": "#E3681E",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.jpg",
+    "large": "/assets/images/large.jpg",
+    "xlarge": "/assets/images/xlarge.jpg"
+  },
+  "author": {
+    "name": "Dennis Berggren",
+    "email": "dennisberggren@me.com"
+  },
+  "source": "https://github.com/DennisBerggren/Homey_SAJ_HS3",
+  "capabilities": {
+    "saj_battery_state": {
+      "type": "enum",
+      "title": {
+        "en": "Battery state",
+        "sv": "Batteriläge"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/drivers/hs3/assets/icon.svg",
+      "values": [
+        {
+          "id": "charging",
+          "title": {
+            "en": "charging",
+            "sv": "laddar"
+          }
+        },
+        {
+          "id": "discharging",
+          "title": {
+            "en": "discharging",
+            "sv": "laddar ur"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "idle",
+            "sv": "vilar"
+          }
+        }
+      ],
+      "insights": false
+    },
+    "saj_app_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Operating mode",
+        "sv": "Driftläge"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/drivers/hs3/assets/icon.svg",
+      "values": [
+        {
+          "id": "self_use",
+          "title": {
+            "en": "Self-use",
+            "sv": "Egenförbrukning"
+          }
+        },
+        {
+          "id": "time_of_use",
+          "title": {
+            "en": "Time-of-use",
+            "sv": "Tidsstyrt (ToU)"
+          }
+        },
+        {
+          "id": "backup",
+          "title": {
+            "en": "Backup",
+            "sv": "Backup"
+          }
+        },
+        {
+          "id": "passive",
+          "title": {
+            "en": "Passive (external control)",
+            "sv": "Passivt (extern styrning)"
+          }
+        },
+        {
+          "id": "other",
+          "title": {
+            "en": "Other",
+            "sv": "Annat"
+          }
+        }
+      ],
+      "insights": false
+    },
+    "saj_status": {
+      "type": "string",
+      "title": {
+        "en": "Inverter status",
+        "sv": "Växelriktarstatus"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/drivers/hs3/assets/icon.svg"
+    },
+    "saj_soc_min": {
+      "type": "number",
+      "title": {
+        "en": "Min SOC (grid)",
+        "sv": "Min-SOC (nät)"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/drivers/hs3/assets/icon.svg",
+      "insights": false
+    },
+    "saj_soc_max": {
+      "type": "number",
+      "title": {
+        "en": "Max SOC",
+        "sv": "Max-SOC"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/drivers/hs3/assets/icon.svg",
+      "insights": false
+    }
+  },
+  "drivers": [
+    {
+      "id": "hs3",
+      "name": {
+        "en": "SAJ HS3 battery",
+        "sv": "SAJ HS3-batteri"
+      },
+      "class": "battery",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "icon": "/drivers/hs3/assets/icon.svg",
+      "images": {
+        "small": "/drivers/hs3/assets/images/small.png",
+        "large": "/drivers/hs3/assets/images/large.png",
+        "xlarge": "/drivers/hs3/assets/images/xlarge.png"
+      },
+      "energy": {
+        "homeBattery": true,
+        "meterPowerImportedCapability": "meter_power.charged",
+        "meterPowerExportedCapability": "meter_power.discharged"
+      },
+      "capabilities": [
+        "measure_battery",
+        "measure_power",
+        "saj_battery_state",
+        "saj_app_mode",
+        "saj_soc_min",
+        "saj_soc_max",
+        "measure_temperature",
+        "measure_temperature.inverter",
+        "meter_power.charged",
+        "meter_power.discharged",
+        "alarm_generic",
+        "saj_status"
+      ],
+      "capabilitiesOptions": {
+        "measure_battery": {
+          "title": {
+            "en": "Battery SOC",
+            "sv": "Batteriladdning"
+          }
+        },
+        "measure_power": {
+          "title": {
+            "en": "Battery (+ charging / − discharging)",
+            "sv": "Batteri (+ laddar / − laddar ur)"
+          },
+          "decimals": 0
+        },
+        "measure_power.grid": {
+          "title": {
+            "en": "SAJ meter (grid)",
+            "sv": "SAJ-mätare (nät)"
+          },
+          "decimals": 0
+        },
+        "measure_temperature": {
+          "title": {
+            "en": "Battery temperature",
+            "sv": "Batteritemperatur"
+          }
+        },
+        "measure_temperature.inverter": {
+          "title": {
+            "en": "Inverter temperature",
+            "sv": "Växelriktartemperatur"
+          }
+        },
+        "meter_power.charged": {
+          "title": {
+            "en": "Charged total",
+            "sv": "Laddat totalt"
+          }
+        },
+        "meter_power.discharged": {
+          "title": {
+            "en": "Discharged total",
+            "sv": "Urladdat totalt"
+          }
+        },
+        "alarm_generic": {
+          "title": {
+            "en": "Inverter fault",
+            "sv": "Växelriktarfel"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "connect"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Connection",
+            "sv": "Anslutning"
+          },
+          "children": [
+            {
+              "id": "host",
+              "type": "text",
+              "label": {
+                "en": "IP address",
+                "sv": "IP-adress"
+              },
+              "value": ""
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "sv": "Port"
+              },
+              "value": 502,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "unit_id",
+              "type": "number",
+              "label": {
+                "en": "Modbus unit id",
+                "sv": "Modbus unit id"
+              },
+              "value": 1,
+              "min": 1,
+              "max": 247
+            },
+            {
+              "id": "poll_interval",
+              "type": "number",
+              "label": {
+                "en": "Poll interval",
+                "sv": "Pollintervall"
+              },
+              "value": 60,
+              "min": 10,
+              "max": 600,
+              "units": {
+                "en": "s"
+              },
+              "hint": {
+                "en": "The AIO3 module accepts only a limited number of Modbus clients and is shared with Tibber. Don't poll more often than needed.",
+                "sv": "AIO3-modulen tar bara emot ett begränsat antal Modbus-klienter och delas med Tibber. Polla inte oftare än nödvändigt."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Control",
+            "sv": "Styrning"
+          },
+          "children": [
+            {
+              "id": "write_mode",
+              "type": "dropdown",
+              "label": {
+                "en": "Access",
+                "sv": "Åtkomst"
+              },
+              "value": "read",
+              "values": [
+                {
+                  "id": "read",
+                  "label": {
+                    "en": "Read only",
+                    "sv": "Endast läsning"
+                  }
+                },
+                {
+                  "id": "readwrite",
+                  "label": {
+                    "en": "Read and write",
+                    "sv": "Läs och skriv"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Action cards that change the battery only work in 'Read and write'. With Tibber Smart control on, Tibber overrides the app.",
+                "sv": "Åtgärdskort som ändrar batteriet fungerar bara i 'Läs och skriv'. Med Tibbers Smartstyrning påslagen tar Tibber över."
+              }
+            },
+            {
+              "id": "rated_power",
+              "type": "number",
+              "label": {
+                "en": "Rated power",
+                "sv": "Märkeffekt"
+              },
+              "value": 12000,
+              "min": 1000,
+              "max": 30000,
+              "units": {
+                "en": "W"
+              },
+              "hint": {
+                "en": "Used to convert watts to SAJ's per-mille power values.",
+                "sv": "Används för att räkna om watt till SAJ:s promillevärden."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Optional",
+            "sv": "Valfritt"
+          },
+          "children": [
+            {
+              "id": "show_grid_meter",
+              "type": "checkbox",
+              "label": {
+                "en": "Show SAJ meter power",
+                "sv": "Visa SAJ-mätarens effekt"
+              },
+              "value": false
+            },
+            {
+              "id": "invert_grid",
+              "type": "checkbox",
+              "label": {
+                "en": "Invert meter sign",
+                "sv": "Invertera mätarens tecken"
+              },
+              "value": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "battery_state_changed",
+        "title": {
+          "en": "Battery state changed",
+          "sv": "Batteriläget ändrades"
+        },
+        "titleFormatted": {
+          "en": "Battery started [[state]]",
+          "sv": "Batteriet började [[state]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "state",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "any",
+                "label": {
+                  "en": "anything",
+                  "sv": "något"
+                }
+              },
+              {
+                "id": "charging",
+                "label": {
+                  "en": "charging",
+                  "sv": "laddar"
+                }
+              },
+              {
+                "id": "discharging",
+                "label": {
+                  "en": "discharging",
+                  "sv": "laddar ur"
+                }
+              },
+              {
+                "id": "idle",
+                "label": {
+                  "en": "idle",
+                  "sv": "vilar"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "State",
+              "sv": "Läge"
+            },
+            "example": {
+              "en": "charging",
+              "sv": "laddar"
+            }
+          },
+          {
+            "name": "power",
+            "type": "number",
+            "title": {
+              "en": "Power (W)",
+              "sv": "Effekt (W)"
+            },
+            "example": 3000
+          }
+        ]
+      },
+      {
+        "id": "app_mode_changed",
+        "title": {
+          "en": "Operating mode changed",
+          "sv": "Driftläget ändrades"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "mode",
+            "type": "string",
+            "title": {
+              "en": "Mode",
+              "sv": "Läge"
+            },
+            "example": "self_use"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "battery_state_is",
+        "title": {
+          "en": "Battery !{{is|is not}} ...",
+          "sv": "Batteriets läge !{{är|är inte}} ..."
+        },
+        "titleFormatted": {
+          "en": "Battery !{{is|is not}} [[state]]",
+          "sv": "Batteriets läge !{{är|är inte}} [[state]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "state",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "charging",
+                "label": {
+                  "en": "charging",
+                  "sv": "laddar"
+                }
+              },
+              {
+                "id": "discharging",
+                "label": {
+                  "en": "discharging",
+                  "sv": "laddar ur"
+                }
+              },
+              {
+                "id": "idle",
+                "label": {
+                  "en": "idle",
+                  "sv": "vilar"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "app_mode_is",
+        "title": {
+          "en": "Operating mode !{{is|is not}} ...",
+          "sv": "Driftläget !{{är|är inte}} ..."
+        },
+        "titleFormatted": {
+          "en": "Operating mode !{{is|is not}} [[mode]]",
+          "sv": "Driftläget !{{är|är inte}} [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "self_use",
+                "label": {
+                  "en": "Self-use",
+                  "sv": "Egenförbrukning"
+                }
+              },
+              {
+                "id": "time_of_use",
+                "label": {
+                  "en": "Time-of-use",
+                  "sv": "Tidsstyrt (ToU)"
+                }
+              },
+              {
+                "id": "backup",
+                "label": {
+                  "en": "Backup",
+                  "sv": "Backup"
+                }
+              },
+              {
+                "id": "passive",
+                "label": {
+                  "en": "Passive (external control)",
+                  "sv": "Passivt (extern styrning)"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "charge_battery",
+        "title": {
+          "en": "Charge battery",
+          "sv": "Ladda batteriet"
+        },
+        "titleFormatted": {
+          "en": "Charge battery at [[watts]] W",
+          "sv": "Ladda batteriet med [[watts]] W"
+        },
+        "hint": {
+          "en": "Sets passive mode. Requires 'Read and write'.",
+          "sv": "Sätter passivt läge. Kräver 'Läs och skriv'."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "watts",
+            "type": "number",
+            "min": 0,
+            "max": 12000,
+            "step": 100,
+            "title": {
+              "en": "Power (W)",
+              "sv": "Effekt (W)"
+            },
+            "placeholder": {
+              "en": "3000",
+              "sv": "3000"
+            }
+          }
+        ]
+      },
+      {
+        "id": "discharge_battery",
+        "title": {
+          "en": "Discharge battery",
+          "sv": "Ladda ur batteriet"
+        },
+        "titleFormatted": {
+          "en": "Discharge battery at [[watts]] W",
+          "sv": "Ladda ur batteriet med [[watts]] W"
+        },
+        "hint": {
+          "en": "Sets passive mode. Requires 'Read and write'.",
+          "sv": "Sätter passivt läge. Kräver 'Läs och skriv'."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "watts",
+            "type": "number",
+            "min": 0,
+            "max": 12000,
+            "step": 100,
+            "title": {
+              "en": "Power (W)",
+              "sv": "Effekt (W)"
+            },
+            "placeholder": {
+              "en": "3000",
+              "sv": "3000"
+            }
+          }
+        ]
+      },
+      {
+        "id": "standby_battery",
+        "title": {
+          "en": "Pause battery",
+          "sv": "Pausa batteriet"
+        },
+        "hint": {
+          "en": "Passive mode with neither charging nor discharging.",
+          "sv": "Passivt läge utan laddning eller urladdning."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          }
+        ]
+      },
+      {
+        "id": "release_control",
+        "title": {
+          "en": "Release control",
+          "sv": "Släpp kontrollen"
+        },
+        "hint": {
+          "en": "Leaves passive mode and restores the previous operating mode (self-use if unknown).",
+          "sv": "Lämnar passivt läge och återställer föregående driftläge (egenförbrukning om okänt)."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          }
+        ]
+      },
+      {
+        "id": "set_app_mode",
+        "title": {
+          "en": "Set operating mode",
+          "sv": "Sätt driftläge"
+        },
+        "titleFormatted": {
+          "en": "Set operating mode to [[mode]]",
+          "sv": "Sätt driftläge till [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "self_use",
+                "label": {
+                  "en": "Self-use",
+                  "sv": "Egenförbrukning"
+                }
+              },
+              {
+                "id": "time_of_use",
+                "label": {
+                  "en": "Time-of-use",
+                  "sv": "Tidsstyrt (ToU)"
+                }
+              },
+              {
+                "id": "backup",
+                "label": {
+                  "en": "Backup",
+                  "sv": "Backup"
+                }
+              },
+              {
+                "id": "passive",
+                "label": {
+                  "en": "Passive (external control)",
+                  "sv": "Passivt (extern styrning)"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_soc_limits",
+        "title": {
+          "en": "Set SOC limits",
+          "sv": "Sätt SOC-gränser"
+        },
+        "titleFormatted": {
+          "en": "Set SOC limits min [[min_soc]] % max [[max_soc]] %",
+          "sv": "Sätt SOC-gränser min [[min_soc]] % max [[max_soc]] %"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hs3"
+          },
+          {
+            "name": "min_soc",
+            "type": "number",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "title": {
+              "en": "Min SOC",
+              "sv": "Min-SOC"
+            },
+            "placeholder": {
+              "en": "20",
+              "sv": "20"
+            }
+          },
+          {
+            "name": "max_soc",
+            "type": "number",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "title": {
+              "en": "Max SOC",
+              "sv": "Max-SOC"
+            },
+            "placeholder": {
+              "en": "100",
+              "sv": "100"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

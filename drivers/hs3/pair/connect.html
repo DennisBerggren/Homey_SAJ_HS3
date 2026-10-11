@@ -1,0 +1,49 @@
+<header class="homey-header">
+  <h1 class="homey-title">SAJ HS3</h1>
+  <p class="homey-subtitle" data-i18n="pair.subtitle"></p>
+</header>
+
+<form class="homey-form" onsubmit="return false;">
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="host" data-i18n="pair.host"></label>
+    <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.50" />
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="port" data-i18n="pair.port"></label>
+    <input class="homey-form-input" id="port" type="number" value="502" />
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="unitId" data-i18n="pair.unit_id"></label>
+    <input class="homey-form-input" id="unitId" type="number" value="1" />
+  </div>
+  <p id="status" style="min-height:1.5em;"></p>
+  <button class="homey-button-primary-full" id="connect" data-i18n="pair.button"></button>
+</form>
+
+<script type="application/javascript">
+  const $ = id => document.getElementById(id);
+
+  $('connect').addEventListener('click', async () => {
+    const host = $('host').value.trim();
+    const port = Number($('port').value) || 502;
+    const unitId = Number($('unitId').value) || 1;
+
+    if (!host) {
+      $('status').textContent = Homey.__('pair.host_missing');
+      return;
+    }
+
+    $('connect').disabled = true;
+    $('status').textContent = Homey.__('pair.connecting');
+
+    try {
+      const res = await Homey.emit('test_connection', { host, port, unitId });
+      $('status').textContent = Homey.__('pair.connected', { soc: res.soc }) + (res.serial ? ` · S/N ${res.serial}` : '');
+      await Homey.createDevice(res.device);
+      Homey.done();
+    } catch (err) {
+      $('status').textContent = Homey.__('pair.failed', { error: err.message || err });
+      $('connect').disabled = false;
+    }
+  });
+</script>
