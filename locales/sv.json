@@ -8,7 +8,11 @@
     "soc_offgrid": "Min-SOC måste vara högre än ödriftsgränsen (__limit__ %) + 5.",
     "verify_failed": "Växelriktaren behöll inte inställningen (__details__). Om Tibber Smartstyrning eller något annat system styr batteriet kan det skriva över appen.",
     "no_contact": "Ingen kontakt med SAJ HS3: __error__",
-    "slot_taken": "Växelriktaren stängde Modbus-anslutningen. AIO3-modulen tar bara emot ett begränsat antal Modbus-klienter – om Home Assistant eller något annat system redan är anslutet, koppla bort det och försök igen."
+    "slot_taken": "Växelriktaren stängde Modbus-anslutningen. AIO3-modulen tar bara emot ett begränsat antal Modbus-klienter – om Home Assistant eller något annat system redan är anslutet, koppla bort det och försök igen.",
+    "unreachable": "Homey fick inget svar från __where__. Kontrollera att IP-adressen stämmer (den kan ha ändrats – ge växelriktaren en fast IP i routern), att Homey och växelriktaren är på samma nätverk och att växelriktarens AIO3-modul är online (den sitter ofta på 2,4 GHz-WiFi med svag signal).",
+    "refused": "__where__ svarade men nekade anslutningen på den porten. Kontrollera att porten är 502 och att IP-adressen verkligen är SAJ-växelriktaren (AIO3-modulen) och inte en annan enhet.",
+    "no_response": "Ansluten, men växelriktaren svarade inte på Modbus-frågan. Kontrollera att Modbus unit id är 1 och försök igen – modulen kan också vara upptagen med Tibber eller en annan klient.",
+    "modbus_exception": "Växelriktaren svarade med Modbus-fel __code__. Det kanske inte är en SAJ HS3/H2-kompatibel modell – rapportera gärna din modell i community-tråden."
   },
   "status": {
     "0": "Initierar",

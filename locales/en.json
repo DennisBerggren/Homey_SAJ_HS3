@@ -8,7 +8,11 @@
     "soc_offgrid": "Min SOC must be higher than the off-grid limit (__limit__ %) + 5.",
     "verify_failed": "The inverter did not keep the setting (__details__). If Tibber Smart control or another system controls the battery, it may override this app.",
     "no_contact": "No contact with the SAJ HS3: __error__",
-    "slot_taken": "The inverter closed the Modbus connection. The AIO3 module only accepts a limited number of Modbus clients – if Home Assistant or another system is already connected, disconnect it and try again."
+    "slot_taken": "The inverter closed the Modbus connection. The AIO3 module only accepts a limited number of Modbus clients – if Home Assistant or another system is already connected, disconnect it and try again.",
+    "unreachable": "Homey got no answer from __where__. Check that the IP address is correct (it may have changed – give the inverter a fixed IP in your router), that Homey and the inverter are on the same network, and that the inverter's AIO3 module is online (it is often on 2.4 GHz WiFi with weak signal).",
+    "refused": "__where__ answered but refused the connection on that port. Check that the port is 502 and that this IP really is the SAJ inverter (AIO3 module) and not another device.",
+    "no_response": "Connected, but the inverter did not answer the Modbus request. Check that the Modbus unit id is 1 and try again – the module may also be busy talking to Tibber or another client.",
+    "modbus_exception": "The inverter answered with Modbus error __code__. It may not be a SAJ HS3/H2 compatible model – please report your model in the community thread."
   },
   "status": {
     "0": "Initializing",

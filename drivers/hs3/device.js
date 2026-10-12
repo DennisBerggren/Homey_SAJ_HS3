@@ -3,6 +3,7 @@
 const { Device } = require('homey');
 const { ModbusTcpClient } = require('../../lib/modbus-tcp');
 const SAJ = require('../../lib/saj-hs3');
+const explainError = require('../../lib/explain-error');
 
 const IDLE_THRESHOLD_W = 50; // under detta räknas batteriet som vilande (brus ±40 W observerat)
 const MAX_FAILURES_BEFORE_UNAVAILABLE = 3;
@@ -358,9 +359,9 @@ class SajHs3Device extends Device {
   }
 
   _explain(err) {
-    // AIO3 accepterar TCP men stänger direkt när alla Modbus-platser är upptagna.
-    if (/stängdes|closed|ECONNRESET/i.test(err.message)) return this.homey.__('errors.slot_taken');
-    return err.message;
+    return explainError(err, (k, a) => this.homey.__(k, a), {
+      host: this.getSetting('host'), port: this.getSetting('port'),
+    });
   }
 
   // Används av flödesvillkor

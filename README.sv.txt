@@ -10,3 +10,5 @@ Bra att veta innan du installerar:
 - Appen är skrivskyddad som standard. Slå på "Läs och skriv" i enhetens inställningar för att använda åtgärdskorten.
 
 Det här är en community-app och har ingen koppling till SAJ. Testad på en SAJ HS3 på 12 kW; återkoppling från andra installationer tas gärna emot på GitHub.
+
+Problem att ansluta? Se felsökningsguiden (engelska) på GitHub: https://github.com/DennisBerggren/Homey_SAJ_HS3/blob/main/TROUBLESHOOTING.md

@@ -11,6 +11,8 @@ The register map is based on [stanus74/home-assistant-saj-h2-modbus](https://git
 - **Tibber Smart control takes precedence.** When Smart control is on in the Tibber app, writes from Homey are accepted by the inverter but not acted on, and Tibber resets the operating mode. Control from Homey only works with Smart control off. Reading always works.
 - The app is **read-only by default.** Set *Access → Read and write* in the device settings to use the action cards.
 
+**Problems connecting?** See [TROUBLESHOOTING.md](TROUBLESHOOTING.md). Questions and feedback: [Homey Community thread](https://community.homey.app/t/app-pro-saj-hs3-modbus/160710).
+
 ## What it shows
 
 | Capability | Register | Note |

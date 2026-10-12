@@ -10,3 +10,5 @@ Good to know before you install:
 - The app is read-only by default. Enable "Read and write" in the device settings to use the action cards.
 
 This is a community app and is not affiliated with SAJ. Tested on a 12 kW SAJ HS3; feedback from other setups is welcome on GitHub.
+
+Having trouble connecting? See the troubleshooting guide on GitHub: https://github.com/DennisBerggren/Homey_SAJ_HS3/blob/main/TROUBLESHOOTING.md

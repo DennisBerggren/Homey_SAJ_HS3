@@ -1,6 +1,6 @@
 {
   "id": "com.saj.hs3",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": ">=12.0.0",
   "sdk": 3,
   "platforms": [
@@ -29,6 +29,12 @@
     "email": "dennisberggren@me.com"
   },
   "source": "https://github.com/DennisBerggren/Homey_SAJ_HS3",
+  "homepage": "https://community.homey.app/t/app-pro-saj-hs3-modbus/160710",
+  "support": "https://community.homey.app/t/app-pro-saj-hs3-modbus/160710",
+  "bugs": {
+    "url": "https://github.com/DennisBerggren/Homey_SAJ_HS3/issues"
+  },
+  "homeyCommunityTopicId": 160710,
   "capabilities": {
     "saj_battery_state": {
       "type": "enum",

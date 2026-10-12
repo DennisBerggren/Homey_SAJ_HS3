@@ -1,4 +1,8 @@
 {
+  "0.1.1": {
+    "en": "Clearer connection error messages with troubleshooting hints. Added links to the community thread.",
+    "sv": "Tydligare felmeddelanden vid anslutningsproblem, med felsökningstips. Länkar till community-tråden."
+  },
   "0.1.0": {
     "en": "First test release: local Modbus TCP monitoring and control of the SAJ HS3.",
     "sv": "Första testversionen: lokal övervakning och styrning av SAJ HS3 via Modbus TCP."

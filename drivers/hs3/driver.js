@@ -3,6 +3,7 @@
 const { Driver } = require('homey');
 const { ModbusTcpClient } = require('../../lib/modbus-tcp');
 const SAJ = require('../../lib/saj-hs3');
+const explainError = require('../../lib/explain-error');
 
 class SajHs3Driver extends Driver {
 
@@ -39,7 +40,7 @@ class SajHs3Driver extends Driver {
     this.homey.flow.getActionCard('set_soc_limits')
       .registerRunListener(async args => args.device.setSocLimits(args.min_soc, args.max_soc));
 
-    this.log('SAJ HS3-drivrutin initierad');
+    this.log('SAJ HS3 driver initialized');
   }
 
   triggerBatteryState(device, { state, power }) {
@@ -87,8 +88,8 @@ class SajHs3Driver extends Driver {
           },
         };
       } catch (err) {
-        if (/stängdes|closed|ECONNRESET/i.test(err.message)) throw new Error(this.homey.__('errors.slot_taken'));
-        throw err;
+        this.log('Pairing failed:', err.code, err.message);
+        throw new Error(explainError(err, (k, a) => this.homey.__(k, a), { host: String(host).trim(), port: Number(port) || 502 }));
       } finally {
         client.close();
       }
